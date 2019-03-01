@@ -50,7 +50,9 @@ func display(w http.ResponseWriter, tmpl string, data interface{}) {
 }
 
 func handleShorten(w http.ResponseWriter, r *http.Request) {
-	rtrn := shortenURL(r.FormValue("url"))
+	r.ParseForm()
+	longURL := r.Form.Get("url")
+	rtrn := shortenURL(longURL)
 	w.Write([]byte("localhost/s/" + rtrn))
 }
 
