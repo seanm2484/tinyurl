@@ -34,7 +34,7 @@ func main() {
 	router.HandleFunc("/s/{shortURL}", handleRedirect).Methods("GET")
 
 	http.Handle("/", router)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":7777", nil)
 }
 
 func indexPage(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +56,7 @@ func handleShorten(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte("ruh roh"))
 	}
-	display(w, "result", Page{Title: "Result", Result: "localhost:8080/s/" + rtrn})
+	display(w, "result", Page{Title: "Result", Result: "localhost:7777/s/" + rtrn})
 }
 
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
