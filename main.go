@@ -19,7 +19,8 @@ var templates = template.Must(template.ParseGlob("public/templates/*"))
 
 //Page is used for templating html pages
 type Page struct {
-	Title string
+	Title  string
+	Result string
 }
 
 func main() {
@@ -38,11 +39,11 @@ func main() {
 }
 
 func indexPage(w http.ResponseWriter, r *http.Request) {
-	display(w, "main", Page{Title: "Home"})
+	display(w, "main", Page{Title: "Home", Result: "test"})
 }
 
 func aboutPage(w http.ResponseWriter, r *http.Request) {
-	display(w, "about", Page{Title: "About"})
+	display(w, "about", Page{Title: "About", Result: "test"})
 }
 
 func display(w http.ResponseWriter, tmpl string, data interface{}) {
@@ -56,7 +57,7 @@ func handleShorten(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte("ruh roh"))
 	}
-	w.Write([]byte("localhost/s/" + rtrn))
+	display(w, "result", Page{Title: "Result", Result: "localhost:8080/s/" + rtrn})
 }
 
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
