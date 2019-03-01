@@ -23,17 +23,11 @@ func shortenURL(longURL string) (string, error) {
 	return shortURL, err
 }
 
-// make sure we have "http://" in front of the url. If not, put it there
 func checkHTTP(longURL string) (string, error) {
-	var err error
-	if len(longURL) < 7 {
-		return "", err
-	}
-	if strings.Contains(longURL[0:7], "http://") {
-		return longURL, nil
-	} else if strings.Contains(longURL[0:8], "https://") {
-		return longURL, nil
+	// if we aren't given a protocol, default them to https.
+	if strings.Contains(longURL, "://") != true {
+		return "https://"+longURL, nil
 	} else {
-		return "https://" + longURL, nil
+		return longURL, nil
 	}
 }
