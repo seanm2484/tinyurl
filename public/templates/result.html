@@ -28,6 +28,11 @@
     // show the modal on page load
     $(window).on('load',function(){
            $('#shortURLModal').modal('show');
+           var resultA = document.getElementById('resultId');
+           var tmp = resultA.innerHTML;
+           var full = location.hostname+(location.port ? ':'+location.port: '') + "/s/"+tmp;
+           resultA.innerHTML = full;
+           resultA.href = full;
      });
      function CopyToClipboard(containerid) {
         if (document.selection) {

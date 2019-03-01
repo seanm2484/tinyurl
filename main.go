@@ -56,7 +56,7 @@ func handleShorten(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.Write([]byte("ruh roh"))
 	}
-	display(w, "result", Page{Title: "Result", Result: "localhost:7777/s/" + rtrn})
+	display(w, "result", Page{Title: "Result", Result: rtrn})
 }
 
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
