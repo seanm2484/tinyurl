@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"html/template"
 	"net/http"
 	"sync"
 
@@ -14,19 +15,38 @@ import (
 var recordID int
 var db *sql.DB
 var m sync.Mutex
+var templates = template.Must(template.ParseGlob("public/templates/*"))
+
+//Page is used for templating html pages
+type Page struct {
+	Title string
+}
 
 func main() {
 	db = initDb("mySqliteDb.sqlite3")
 	defer db.Close()
 	createTable(db)
-	fmt.Println("Serving on 0.0.0.0:8080")
 
-	r := mux.NewRouter()
-	// serve a static page at 'http://domain.com/'
-	r.Handle("/", http.FileServer(http.Dir("./static")))
-	r.HandleFunc("/shorten", handleShorten)
-	r.HandleFunc("/s/{shortURL}", handleRedirect)
-	http.ListenAndServe(":8080", r)
+	router := mux.NewRouter()
+	router.HandleFunc("/", indexPage).Methods("GET")
+	router.HandleFunc("/about", aboutPage).Methods("GET")
+	router.HandleFunc("/shorten", handleShorten).Methods("POST")
+	router.HandleFunc("/s/{shortURL}", handleRedirect).Methods("GET")
+
+	http.Handle("/", router)
+	http.ListenAndServe(":8080", nil)
+}
+
+func indexPage(w http.ResponseWriter, r *http.Request) {
+	display(w, "main", Page{Title: "Home"})
+}
+
+func aboutPage(w http.ResponseWriter, r *http.Request) {
+	display(w, "about", Page{Title: "About"})
+}
+
+func display(w http.ResponseWriter, tmpl string, data interface{}) {
+	templates.ExecuteTemplate(w, tmpl, data)
 }
 
 func handleShorten(w http.ResponseWriter, r *http.Request) {
