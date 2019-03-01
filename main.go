@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"html/template"
 	"net/http"
 	"sync"
@@ -64,6 +63,5 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	shortURL := params["shortURL"]
 	rec := readItem(db, shortURL)
-	fmt.Println(rec.longURL)
 	http.Redirect(w, r, rec.longURL, http.StatusSeeOther)
 }
