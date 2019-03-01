@@ -3,6 +3,64 @@
 <div class="content">
 	<h2>TinyURL Result</h2>
 	<div>Your Tiny URL is: {{.Result}}</div>
+    <input type="text" value="Hello World" id="myInput">
+
+
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="shortURLModal" tabindex="-1" role="dialog" aria-labelledby="shortURLModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">TinyURL Results</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>Your Tiny URL is: <a id="resultId"  href="{{.Result}}">{{.Result}}</a></div>
+      </div>
+      <div>
+          <p id="copyConfirmation" style="display:none">Your link has been copied!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="copyURLBtn" class="btn btn-primary" onclick="CopyToClipboard('resultId')">Copy URL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 {{template "footer" .}}
+<script>
+    // show the modal on page load
+    $(window).on('load',function(){
+           $('#shortURLModal').modal('show');
+     });
+     function CopyToClipboard(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select().createTextRange();
+            document.execCommand("copy");
+            var items = document.getElementById("copyConfirmation");
+            items.style.display = 'block'
+
+        } else if (window.getSelection) {
+            var range = document.createRange();
+             range.selectNode(document.getElementById(containerid));
+             window.getSelection().addRange(range);
+             document.execCommand("copy");
+             var items = document.getElementById("copyConfirmation");
+             items.style.display = 'block'
+        }};
+
+
+</script>
 {{end}}
