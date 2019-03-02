@@ -50,3 +50,15 @@ func TestCheckHTTPWithNone(t *testing.T) {
 			expected, actual)
 	}
 }
+
+func TestCheckHTTPWithOtherProtocol(t *testing.T) {
+    expected := "ftp://www.google.com"
+    actual, err := checkHTTP("ftp://www.google.com")
+    if err != nil {
+        t.Errorf("TestCheckHTTPWithOtherProtocol error: %v", err)
+    }
+    if actual != expected {
+        t.Errorf(`TestCheckHTTPWithOtherProtocol bad return: expected
+                %v but got %v`, expected, actual)
+    }
+}
