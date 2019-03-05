@@ -19,8 +19,9 @@ RUN go install -v ./...
 
 RUN go build -o tinyurl
 
-# This container exposes port 8080 to the outside world
-EXPOSE 7777
 
 # Run the executable
 CMD ["./tinyurl"]
+# This container exposes port 8080 to the outside world
+EXPOSE 7777
+

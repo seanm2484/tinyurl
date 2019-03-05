@@ -23,7 +23,7 @@ type Page struct {
 }
 
 func main() {
-	db = initDb("mySqliteDb.sqlite3")
+	db = initDb("tinyurl.sqlite3")
 	defer db.Close()
 	createTable(db)
 
