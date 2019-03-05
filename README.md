@@ -24,5 +24,5 @@ go build -o tinyurl
 ## Demo Server
 If you would like to try tinyURL out without running it yourself, there is an instance running at:
 ```
-http://159.65.177.76:7777/
+http://tiny.bikerunhack.com
 ```
